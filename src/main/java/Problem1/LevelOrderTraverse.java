@@ -19,7 +19,9 @@ public class LevelOrderTraverse {
             return result;
 
         Queue<TreeNode> treeNodeQueue = new LinkedList<TreeNode>();
-        //I think in this situation a LinkedList is preferable to an Array because of its dynamic size.
+        //I think in this situation a LinkedList implementation of the Queue interface is preferable to an Array
+        // because a LinkedList has a dynamic size, and we don't know how large the binary tree inputs will be.
+
         TreeNode<Integer> pointer;
         treeNodeQueue.add(root);
 
@@ -27,8 +29,10 @@ public class LevelOrderTraverse {
 
             List<Integer> list = new LinkedList<Integer>();
             int currentsize = treeNodeQueue.size();
+            //Because more nodes will be added to the Queue in the code below, we need to remember how many nodes were in it
+            // initially so that we add the correct number of nodes to each new list.
 
-            for (int i = 0; i <= currentsize; i++) {
+            for (int i = 1; i <= currentsize; i++) {
                 pointer = treeNodeQueue.poll();
                 list.add(pointer.val);
 
