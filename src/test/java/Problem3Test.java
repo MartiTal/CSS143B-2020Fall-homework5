@@ -36,6 +36,60 @@ public class Problem3Test {
     public void testInOrderTraverse() {
         // homework
         // to verify inOrderTraverse(TreeNode<Integer> node)
+
+        //Case 1: Root only
+        //        2
+        //       / \
+        //      N   N
+        TreeNode<Integer> root = new TreeNode<Integer>(2);
+        //Should be: [2]
+        List<Integer> expected = Arrays.asList(2);
+        List<Integer> actual = inOrderTraverse(root);
+        assertEquals(expected, actual);
+
+        //Case 2: Root with no left node
+        //        2
+        //       / \
+        //      N   5
+        root = new TreeNode<Integer>(2);
+        root.right = new TreeNode<Integer>(5);
+        //Should be: [2, 5]
+        expected = Arrays.asList(2, 5);
+        actual = inOrderTraverse(root);
+        assertEquals(expected, actual);
+
+        //Case 3: Root with no right node
+        //        2
+        //       / \
+        //      5   N
+        root = new TreeNode<Integer>(2);
+        root.left = new TreeNode<Integer>(5);
+        //Should be: [5, 2]
+        expected = Arrays.asList(5, 2);
+        actual = inOrderTraverse(root);
+        assertEquals(expected, actual);
+
+        //Case 4: Multi-level tree
+        //        2
+        //       / \
+        //      5   8
+        //     / \    \
+        //    7   1    4
+        //            / \
+        //           6   9
+        root = new TreeNode<Integer>(2);
+        root.left = new TreeNode<Integer>(5);
+        root.left.left = new TreeNode<Integer>(7);
+        root.left.right = new TreeNode<Integer>(1);
+        root.right = new TreeNode<Integer>(8);
+        root.right.right = new TreeNode<Integer>(4);
+        root.right.right.left = new TreeNode<Integer>(6);
+        root.right.right.right = new TreeNode<Integer>(9);
+        //Should be: [7, 5, 1, 2, 8, 6, 4, 9]
+        expected = Arrays.asList(7, 5, 1, 2, 8, 6, 4, 9);
+        actual = inOrderTraverse(root);
+        assertEquals(expected, actual);
+
     }
 
     private static List<Integer> inOrderTraverse(TreeNode<Integer> node) {
@@ -146,14 +200,18 @@ public class Problem3Test {
         //    N   N
         // homework
         // what problem can you see for insertInBst from this test case?
-        // answer:
+        // answer: All of the nodes will be added to the same side (always to the far right of the tree)
         // discuss how you would solve it in a comment below
-        // answer:
+        // answer: Add the nodes to the tree in a different order, for example 3, 2, 5, 4. Or, start
+        // with a different number as the root of the tree.
         root = new TreeNode<>(1);
         testCases.add(new BSTTestCase<>(root, 2, Arrays.asList(1, 2)));
         testCases.add(new BSTTestCase<>(root, 3, Arrays.asList(1, 2, 3)));
         testCases.add(new BSTTestCase<>(root, 4, Arrays.asList(1, 2, 3, 4)));
         testCases.add(new BSTTestCase<>(root, 5, Arrays.asList(1, 2, 3, 4, 5)));
+        //I'm not sure if the binary tree can still guarantee a fast search because all of the above treenodes
+        //will be added to the same side, effectively making this tree a linked list. Our method of binary search
+        //seems ineffective if all the nodes keep getting added to just the left or just the right.
 
         return testCases;
     }
